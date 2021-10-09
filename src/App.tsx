@@ -21,11 +21,11 @@ const App: React.FC = () => {
     try {
       await setProvider(service);
       const accounts: string[] = await web3.eth.getAccounts();
-      const chainId: number = await web3.eth.getChainId();
+      const provider: any = await detectEthereumProvider();
       dispatch(makeConnection({
         connected: true,
         address: accounts[0],
-        chainId
+        chainId: provider.chainId
       }));
       localStorage.setItem('walletprovider', service);
     }
@@ -45,8 +45,7 @@ const App: React.FC = () => {
     async function subscribe() {
       const provider: any = await detectEthereumProvider();
       provider.on("connect", async () => {
-        const chain: number = await web3.eth.getChainId();
-        dispatch(changeChain(chain));
+        dispatch(changeChain(provider.chainId));
       });
   
       provider.on("disconnect", () => {
@@ -62,15 +61,16 @@ const App: React.FC = () => {
         dispatch((changeAccount(accounts[0])));
       });
   
-      provider.on("chainChanged", async (chainId: number) => {
+      provider.on("chainChanged", async () => {
         window.location.reload();
-        dispatch(changeChain(chainId));
       });
     }
     
     Promise.resolve(subscribe());
 
   }, [connected, dispatch])
+
+  console.log(JSON.parse(Networks[Number(chain)] ?? '{"name": "Unsupported network"}'));
 
   return (
     <div className="App">

@@ -11,7 +11,6 @@ export const setProvider = async (service: 'injected' | 'walletconnect') => {
         const provider: any = await detectEthereumProvider();
         if (provider)
         {
-            await provider.enable();
             web3 = createAlchemyWeb3(getEndpoint(Number(provider.chainId), false));
         }
         else
@@ -63,8 +62,8 @@ export const subscribeProvider = async (provider: WalletConnectProvider, service
   };
 
 function getEndpoint(chainId: number, https = false): string {
-    const chain: any = JSON.parse(Networks[chainId] ?? '');
-    switch (chain.name?.toLowerCase() ?? '') {
+    const chain: any = Networks[chainId] ?? '';
+    switch (chain !== '' ? JSON.parse(chain).name?.toLowerCase() ?? '' : 'ethereum') {
         case ('ethereum'): {
             if (https) {
                 return `${process.env.REACT_APP_ETH_RPC_HTTPS}`;
