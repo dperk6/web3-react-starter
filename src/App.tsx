@@ -63,6 +63,7 @@ const App: React.FC = () => {
       });
   
       provider.on("chainChanged", async (chainId: number) => {
+        window.location.reload();
         dispatch(changeChain(chainId));
       });
     }
@@ -79,7 +80,7 @@ const App: React.FC = () => {
             {connected ? 'Connected' : 'Connect'}
           </button>
         {connected &&<div className="chain-name">
-          <span>{`Selected Network: ${Networks[Number(chain)]}`}</span>
+          <span>{`Selected Network: ${JSON.parse(Networks[Number(chain)] ?? '{"name": "Unsupported network"}').name}`}</span>
         </div>}
       </div>
       {modal &&
