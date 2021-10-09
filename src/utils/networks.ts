@@ -1,8 +1,8 @@
 export enum Networks {
-    'Ethereum' = 1,
-    'BSC' = 56,
-    'Polygon' = 137,
-    'Fantom' = 250,
-    'Arbitrum' = 42161,
-    'Avalanche' = 43114
+    '{"name": "Ethereum", "id": "ethereum"}' = 1,
+    '{"name": "BSC", "id": "binance-smart-chain"}' = 56,
+    '{"name": "Polygon", "id": "polygon-pos"}' = 137,
+    '{"name": "Fantom", "id": "fantom"}' = 250,
+    '{"name": "Arbitrum", "id": "arbitrum"}' = 42161,
+    '{"name": "Avalanche", "id": "avalanche"}' = 43114
 }

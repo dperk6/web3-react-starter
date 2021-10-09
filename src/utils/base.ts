@@ -63,7 +63,8 @@ export const subscribeProvider = async (provider: WalletConnectProvider, service
   };
 
 function getEndpoint(chainId: number, https = false): string {
-    switch (Networks[chainId]?.toLowerCase()) {
+    const chain: any = JSON.parse(Networks[chainId] ?? '');
+    switch (chain.name?.toLowerCase() ?? '') {
         case ('ethereum'): {
             if (https) {
                 return `${process.env.REACT_APP_ETH_RPC_HTTPS}`;
